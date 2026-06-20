@@ -1,34 +1,34 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { nanoid } from "nanoid";
 import { Fragment } from "react";
-
+import { useForm } from "react-hook-form";
 const Create = (props) => {
   const todo = props.todo;
   const setTodo = props.setTodo;
-  const [title, settitle] = useState("");
-  const SubmitHandler = (e) => {
-    e.preventDefault();
-    const newtodo = {
-      id: nanoid(),
-      title,
-      isCompleted: false,
-    };
+  const {register,
+    handleSubmit,
+    reset,
+    formState: {errors}
+  } = useForm();
+  const SubmitHandler = (data) => {
+    data.isCompleted = false;
+    data.id = nanoid();
+    console.log(data);
     const copytodos = [...todo];
-    copytodos.push(newtodo);
+    copytodos.push(data);
     setTodo(copytodos);
-    settitle("");
+    reset();
   };
   return (
     <div className="border-transparent w-full lg:w-3/5 p-10 text-center bg-[#4B5694] rounded-md">
       <h1 className="text-5xl font-thin font-bold text-[#EAE0CF]">Create Tasks</h1>
-      <form onSubmit={SubmitHandler}>
-        <input
-          className="w-full max-w-md mx-auto mt-10 mb-10 border-b px-4 py-3 rounded-sm text-lg font-semibold text-center uppercase"
-          onChange={(e) => settitle(e.target.value)}
-          type="text"
-          value={title}
-          placeholder="title"
-        />
+      <form onSubmit={handleSubmit(SubmitHandler)}>
+       <input
+  {...register("title", { required: "Title is required" })}
+  className="w-full max-w-md mx-auto mt-10 mb-10 border-b px-4 py-3 rounded-sm text-lg font-semibold text-center uppercase"
+  type="text"
+  placeholder="Title"
+/>
         <br />
         <button
         className="border-none px-12 py-2 bg-[#EAE0CF] text-[#111844] rounded-lg shadow-md hover:scale-105 cursor-pointer"
