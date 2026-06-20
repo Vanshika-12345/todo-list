@@ -2,6 +2,7 @@
 import { nanoid } from "nanoid";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
+import {toast} from "react-toastify";
 const Create = (props) => {
   const todo = props.todo;
   const setTodo = props.setTodo;
@@ -14,10 +15,10 @@ const Create = (props) => {
   const SubmitHandler = (data) => {
     data.isCompleted = false;
     data.id = nanoid();
-    console.log(data);
     const copytodos = [...todo];
     copytodos.push(data);
     setTodo(copytodos);
+    toast.success("Todo Created");
     reset();
   };
   return (

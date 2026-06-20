@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Fragment } from "react";
+import { toast } from "react-toastify";
 const Read = (props) => {
   const todo = props.todo;
   const setTodo = props.setTodo;
@@ -8,6 +9,7 @@ const Read = (props) => {
   {
     const filteredtodo = todo.filter(todo => todo.id != id);
     setTodo(filteredtodo);
+    toast.error("Todo Deleted");
   }
  const renderTodo = todo.map((todo) => {
   return (
